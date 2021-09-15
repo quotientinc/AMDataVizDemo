@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\shiny\index.html" />
+    <Content Remove="wwwroot\shiny\.DS_Store" />
+    <Content Remove="wwwroot\shiny\amipsite.js" />
+    <Content Remove="wwwroot\shiny\readme.md" />
+    <Content Remove="wwwroot\shiny\style.css" />
+    <Content Remove="wwwroot\shiny\site.js" />
+  </ItemGroup>
+</Project>

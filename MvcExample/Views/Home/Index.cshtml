@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks" data-content="bar-chart-tabcontent">Bar Graph</button>
+        <button class="tablinks" data-content="line-chart-tabcontent">Line Graph</button>
+        <button class="tablinks" data-content="box-plot-tabcontent">Box Plot</button>
+    </div>
+
+    <!-- Tab content -->
+    <div id="bar-chart-tabcontent" class="tabcontent hidden">
+        <h3>Bar Chart</h3>
+        <div class="container-fluid">
+            <div id="barchart" class="chart"></div>
+        </div>
+    </div>
+
+    <div id="line-chart-tabcontent" class="tabcontent hidden">
+        <h3>Line Chart</h3>
+        <div class="container-fluid">
+            <div id="linechart" class="chart"></div>
+        </div>
+    </div>
+
+    <div id="box-plot-tabcontent" class="tabcontent hidden">
+        <h3>Box Plot</h3>
+        <div class="container-fluid">
+            <div id="boxplot" class="chart"></div>
+        </div>
+    </div>
