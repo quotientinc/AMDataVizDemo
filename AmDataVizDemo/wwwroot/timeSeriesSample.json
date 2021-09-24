@@ -1,0 +1,61 @@
+﻿{
+  "SeriesName": "Foo",
+  "SeriesData": [
+    {
+      "Idx": 0,
+      "TimeValue": 266,
+      "Feature": "2020-09-12 14:35:00"
+    },
+    {
+      "Idx": 1,
+      "TimeValue": 245,
+      "Feature": "2020-09-26 14:35:00"
+    },
+    {
+      "Idx": 2,
+      "TimeValue": 189,
+      "Feature": "2020-10-10 14:35:00"
+    },
+    {
+      "Idx": 3,
+      "TimeValue": 300,
+      "Feature": "2020-10-24 14:35:00"
+    },
+    {
+      "Idx": 4,
+      "TimeValue": 301,
+      "Feature": "2020-11-07 14:35:00"
+    },
+    {
+      "Idx": 5,
+      "TimeValue": 320,
+      "Feature": "2020-11-21 14:35:00"
+    },
+    {
+      "Idx": 6,
+      "TimeValue": 199,
+      "Feature": "2020-12-05 14:35:00"
+    },
+    {
+      "Idx": 7,
+      "TimeValue": 206,
+      "Feature": "2020-12-19 14:35:00"
+    },
+    {
+      "Idx": 8,
+      "TimeValue": 398,
+      "Feature": "2021-01-02 14:35:00"
+    },
+    {
+      "Idx": 9,
+      "TimeValue": 198,
+      "Feature": "2021-01-16 14:35:00"
+    },
+    {
+      "Idx": 10,
+      "TimeValue": 266,
+      "Feature": "2021-01-30 14:35:00"
+    }
+
+  ]
+}

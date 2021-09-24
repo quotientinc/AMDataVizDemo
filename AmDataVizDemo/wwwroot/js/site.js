@@ -7,6 +7,11 @@ jQuery(document).ready(function ($) {
         showChart($(this).attr('data-content'));
         $(this).removeClass('active').addClass('active');
     });
+    $('#forecast-arima').on('click', function () {
+        console.log("forecasting...");
+        loadForecast();
+        console.log("done forecasting.");
+    });
 });
 
 function loadSupplierJson() {
@@ -20,6 +25,21 @@ function loadSupplierJson() {
             generateChart("barchart", "bar", data);
             generateChart("linechart", "line", data);
             generateChart("boxplot", "boxplot", data);
+        }
+    });
+}
+
+function loadForecast() {
+    // hide other tab content
+    $('.tabcontent').removeClass('hidden').addClass('hidden'); // hide all tabcontent elements
+
+    $.ajax({
+        url: "/Ajax/ForecastArima",
+        type: 'GET',
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
         }
     });
 }
