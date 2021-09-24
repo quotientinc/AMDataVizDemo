@@ -4,16 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MvcExample.Models.ViewModels
+namespace AmDataVizDemo.Models.ViewModels
 {
 
     // This defines the structure of data used in the visualizations
-    public class SupplierData
+    public class SupplierDatum
     {
         public string name { get; set; }
         public List<double> data { get; set; }
 
-        public SupplierData()
+        public SupplierDatum()
         {
             data = new List<double>();
         }
