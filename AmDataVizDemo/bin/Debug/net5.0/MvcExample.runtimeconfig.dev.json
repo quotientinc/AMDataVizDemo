@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "/Users/rb/.dotnet/store/|arch|/|tfm|",
-      "/Users/rb/.nuget/packages"
-    ]
-  }
-}
