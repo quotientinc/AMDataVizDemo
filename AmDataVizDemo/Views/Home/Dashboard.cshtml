@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Start Breadcrumbbar -->
+<div class="breadcrumbbar">
+    <div class="row align-items-center">
+        <div class="col-md-8 col-lg-8">
+            <h1 class="page-title">@ViewData["Title"]</h1>
+            <div class="breadcrumb-list">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="~/Home">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="~/Home/Dashboard">@ViewData["Title"]</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="widgetbar">
+                <button class="btn btn-primary"><i class="ri-refresh-line mr-2"></i>Refresh</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumbbar -->
+<!-- Start Contentbar -->
+<div class="contentbar">
+    <p>Refer to the <em>dashboard</em> page on <a href="https://lee486.shinyapps.io/AMNOW-ForecastingAnalytics/">Su-Ah's R Shiny mockup</a></p>
+
+    <p>Show icons & totals for things that are valid for AMIP, some suggestions:</p>
+    <ul>
+        <li>Total suppliers</li>
+        <li>Total parts produced</li>
+        <li>Total jobs</li>
+        <li>Total printers</li>
+        <li>Total equipment suppliers</li>
+        <li>Total part suppliers</li>
+        <li>Total states represented by jobs</li>
+        <li>Table can show total parts per supplier</li>
+    </ul>
+
+    <p>Don't show a datatable of production data here, we do that elsewhere.</p>
+</div>
+<!-- End Contentbar -->
+

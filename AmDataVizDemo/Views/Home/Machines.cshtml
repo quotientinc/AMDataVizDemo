@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Materials";
+}
+
+<!-- Start Breadcrumbbar -->
+<div class="breadcrumbbar">
+    <div class="row align-items-center">
+        <div class="col-md-8 col-lg-8">
+            <h1 class="page-title">@ViewData["Title"]</h1>
+            <div class="breadcrumb-list">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="~/Home/Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="~/Home/Machines">@ViewData["Title"]</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="widgetbar">
+                <button class="btn btn-primary"><i class="ri-refresh-line mr-2"></i>Refresh</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumbbar -->
+<!-- Start Contentbar -->
+<div class="contentbar">
+
+    <p>Datatable of machines</p>
+
+</div>
+<!-- End Contentbar -->

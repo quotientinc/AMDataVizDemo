@@ -97,35 +97,41 @@
                                 <i class="ri-bar-chart-line"></i><span>Charts</span><i class="ri-arrow-right-s-line"></i>
                             </a>
                             <ul class="vertical-submenu">
-                                <li><a href="">Forecast</a></li>
-                                <li><a href="">Production Charts</a></li>
-                                <li><a href="">Test Charts</a></li>
+                                <li><a href="~/Home/ProductionForecastCharts">Production Forecast</a></li>
+                                <li><a href="~/Home/ProductionCharts">Production Charts</a></li>
+                                <li><a href="~/Home/TestCharts">Test Charts</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="javaScript:void();">
-                                <i class="ri-apps-line"></i><span>Comparison</span>
+                            <a href="~/Home/ProductionComparison">
+                                <i class="ri-apps-line"></i><span>Production Comparison</span>
                             </a>
                         </li>
                         <li>
-                            <a href="javaScript:void();">
-                                <i class="ri-bubble-chart-line"></i><span>Materials</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javaScript:void();">
+                            <a href="~/Home/SupplierMap">
                                 <i class="ri-compass-3-line"></i><span>Supplier Map</span>
                             </a>
                         </li>
                         <li class="vertical-header">Production Data</li>
                         <li>
-                            <a href="javaScript:void();">
+                            <a href="~/Home/ProductionData">
                                 <i class="ri-todo-line"></i><span>Production Data</span>
                             </a>
                         </li>
                         <li>
-                            <a href="javaScript:void();">
+                            <a href="~/Home/TestData">
                                 <i class="ri-stack-line"></i><span>Test Data</span>
+                            </a>
+                        </li>
+                        <li class="vertical-header">Industry Data</li>
+                        <li>
+                            <a href="~/Home/Materials">
+                                <i class="ri-bubble-chart-line"></i><span>Materials</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="~/Home/Machines">
+                                <i class="ri-bubble-chart-line"></i><span>Machines</span>
                             </a>
                         </li>
                     </ul>
@@ -292,32 +298,10 @@
                 <!-- End row -->
             </div>
             <!-- End Topbar -->
-            <!-- Start Breadcrumbbar -->
-            <div class="breadcrumbbar">
-                <div class="row align-items-center">
-                    <div class="col-md-8 col-lg-8">
-                        <h4 class="page-title">CRM</h4>
-                        <div class="breadcrumb-list">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">CRM</li>
-                            </ol>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-lg-4">
-                        <div class="widgetbar">
-                            <button class="btn btn-primary"><i class="ri-refresh-line mr-2"></i>Refresh</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Breadcrumbbar -->
-            <!-- Start Contentbar -->
-            <div class="contentbar">
-                @RenderBody()
-            </div>
-            <!-- End Contentbar -->
+
+
+            @RenderBody()
+
             <!-- Start Footerbar -->
             <div class="footerbar">
                 <footer class="footer">

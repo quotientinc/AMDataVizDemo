@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Production Forecast";
+}
+
+<!-- Start Breadcrumbbar -->
+<div class="breadcrumbbar">
+    <div class="row align-items-center">
+        <div class="col-md-8 col-lg-8">
+            <h1 class="page-title">@ViewData["Title"]</h1>
+            <div class="breadcrumb-list">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="~/Home/Dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="">Charts</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="~/Home/ProductionForecastCharts">@ViewData["Title"]</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+            <div class="widgetbar">
+                <button class="btn btn-primary"><i class="ri-refresh-line mr-2"></i>Refresh</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumbbar -->
+<!-- Start Contentbar -->
+<div class="contentbar">
+    <p>Refer to the <em>Forecast</em> page and <em>Test Data</em> page on <a href="https://lee486.shinyapps.io/AMNOW-ForecastingAnalytics/">Su-Ah's R Shiny mockup</a></p>
+
+    <p>The Shiny app Forecast page has 2 sections: production data charts, and then forecast charts.</p>
+
+    <ul>
+        <li>Don't show production data charts here. We'll show those on a different page.</li>
+        <li>
+            For the forecast, just show a chart forecasting production data.
+            There is a simple function that runs a SSA forecast on a dataset;
+            this can be expanded and/or adapted for a different dataset, then charted along with the production data.
+        </li>
+    </ul>
+
+    <p>Refer to the forecast chart on the Test Data page. You may want to incorporate some elements of this.</p>
+
+    <p>This simple example will return data + forecast data - open JS console to see data.</p>
+    <div class="tab">
+        <button class="tabforecast" id="forecast-arima" data-content="forecast-tabcontent">Forecast</button>
+    </div>
+
+</div>
+<!-- End Contentbar -->
+
+

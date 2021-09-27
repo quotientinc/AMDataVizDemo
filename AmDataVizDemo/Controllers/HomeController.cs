@@ -20,7 +20,7 @@ namespace AmDataVizDemo.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Dashboard");
         }
 
         public IActionResult Example()
@@ -28,7 +28,46 @@ namespace AmDataVizDemo.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
+
+        public IActionResult ProductionForecastCharts()
+        {
+            return View();
+        }
+        public IActionResult ProductionCharts()
+        {
+            return View();
+        }
+        public IActionResult TestCharts()
+        {
+            return View();
+        }
+
+        public IActionResult ProductionComparison()
+        {
+            return View();
+        }
+        public IActionResult Materials()
+        {
+            return View();
+        }
+        public IActionResult Machines()
+        {
+            return View();
+        }
+        public IActionResult SupplierMap()
+        {
+            return View();
+        }
+
+        public IActionResult ProductionData()
+        {
+            return View();
+        }
+        public IActionResult TestData()
         {
             return View();
         }
