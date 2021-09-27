@@ -43,7 +43,8 @@ namespace AmDataVizDemo.Services
         {   //  param: TimeSeriesData timeSeries
 
             // for now, just read the static data from the file
-            string filePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "timeSeriesSample.json");
+            string filePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar
+                + "data" + System.IO.Path.DirectorySeparatorChar + "timeSeriesSample.json");
             string dataRawJson = System.IO.File.ReadAllText(filePath);
 
             TimeSeriesData timeSeries = new TimeSeriesData();

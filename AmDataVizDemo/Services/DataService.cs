@@ -21,7 +21,8 @@ namespace AmDataVizDemo.Services
             List<SupplierDatum> supplierData = new List<SupplierDatum>();
 
             // for now, just read the static data from the file
-            string prodSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "prodSample.json");
+            string prodSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar
+                + "data" + System.IO.Path.DirectorySeparatorChar + "prodSample.json");
             string prodDataRawJson = System.IO.File.ReadAllText(prodSampleFilePath);
 
             try
