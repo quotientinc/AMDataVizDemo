@@ -1,0 +1,7 @@
+﻿.tabcontent.hidden {
+    display: none;
+}
+.chart {
+    width: 90%;
+    height: 600px;
+}
