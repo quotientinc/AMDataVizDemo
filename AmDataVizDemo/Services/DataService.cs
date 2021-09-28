@@ -72,6 +72,24 @@ namespace AmDataVizDemo.Services
 
             return timeSeriesData;
         }
+        public async Task<List<JobTestDataViewModel>> GetJobTestData()
+        {
+            // for now, just read the static data from the file
+            string jobTableDataJsonFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "testReport.json");
+            string jobTableDataRawJson = System.IO.File.ReadAllText(jobTableDataJsonFilePath);
+
+            List<JobTestDataViewModel> data = new();
+            try
+            {
+                data = JsonConvert.DeserializeObject<List<JobTestDataViewModel>>(jobTableDataRawJson);
+            }
+            catch (Exception ex)
+            {
+                //@todo return an error to the front end
+            }
+
+            return data;
+        }
 
         public DataService()
         {

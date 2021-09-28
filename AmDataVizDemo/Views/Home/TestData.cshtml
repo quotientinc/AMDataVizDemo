@@ -31,5 +31,70 @@
 
     <p>Tidy this up- chart labels etc.</p>
 
+    <div class="grid-row">
+        <div class="card col-12">
+            <ul class="nav nav-tabs" id="jobGraphTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="job-table-tab" data-toggle="tab" href="#job-table" role="tab" aria-controls="job table" aria-selected="true">Job Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="job-bar-chart-tab" data-toggle="tab" href="#job-bar-chart" role="tab" aria-controls="profile" aria-selected="false">Job Bar Chart</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="job-table" role="tabpanel" aria-labelledby="job-table-tab">
+                    <table class="dataTable display" id="job-test-data-table">
+                        <thead>
+                            <th>Job Name</th>
+                            <th>Number of DataPoints</th>
+                        </thead>
+                        <tbody>
+                            @foreach (string key in ViewBag.TotalJobReports.Keys)
+                            {
+                                <tr>
+                                    <td>@key</td>
+                                    <td>@ViewBag.TotalJobReports[key]</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="job-bar-chart" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            </div>
+        </div>
+    
+    </div>
+    <div class="grid-row">
+        <div class="col-12 card">
+            <h2>All Test Reports</h2>
+            <table class="dataTable display" id="job-test-data-table">
+                <thead>
+                    <tr>
+                        <th>Job Name</th>
+                        <th>Supplier Name</th>
+                        <th>Step Name</th>
+                        <th>Equipment Type</th>
+                        <th>KPI Name</th>
+                        <th>KPI Value</th>
+                        <th>KPI Units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (JobTestDataViewModel data in ViewBag.TestDatum)
+                    {
+                        <tr>
+                            <td>@data.JobName</td>
+                            <td>@data.SupplierName</td>
+                            <td>@data.StepName</td>
+                            <td>@data.EquipmentType</td>
+                            <td>@data.KpiName</td>
+                            <td>@data.KpiValue</td>
+                            <td>@data.KpiUnits</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <!-- End Contentbar -->
