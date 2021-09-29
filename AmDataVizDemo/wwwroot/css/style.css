@@ -13,6 +13,31 @@
 .fas {
     font-size: xx-large;
 }
+.fa-clipboard{
+    color: green
+}
+.fa-chart-pie{
+    color: blue;
+}
+.fa-city {
+    color: red;
+}
+.fa-truck{
+    color: tomato;
+}
+.fa-tools{
+    color: orange;
+}
+.fa-cubes{
+    color: purple;
+}
+.fa-map-marked{
+    color: turquoise;
+}
+.fa-sitemap{
+    color:olive;
+}
+
 .infocol {
     padding: 10pt;
     margin-bottom: 15px;
