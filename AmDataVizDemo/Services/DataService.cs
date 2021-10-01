@@ -90,7 +90,22 @@ namespace AmDataVizDemo.Services
 
             return data;
         }
+        public async Task<List<SupplierDatum>> GetJobTestDataTotals()
+        {
+            List<JobTestDataViewModel> testData = await GetJobTestData();
+            var groupedData = testData.GroupBy(d => d.JobName);
 
+            List<SupplierDatum> dataTotals = new();
+            foreach(var dataGroup in groupedData)
+            {
+                dataTotals.Add(new SupplierDatum
+                {
+                    name = dataGroup.Key,
+                    data = new List<double> { (double)dataGroup.Count() }
+                });
+            }
+            return dataTotals;
+        }
         public DataService()
         {
         }

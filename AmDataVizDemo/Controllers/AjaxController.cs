@@ -62,6 +62,18 @@ namespace AMIPWeb.Controllers
             return Json(timeSeries);
         }
 
+
+        // GET: /Ajax/JobTestDataTotals
+        public async Task<IActionResult> JobTestDataTotals()
+        {
+           return Json(await dataService.GetJobTestDataTotals());
+        }
+
+        // GET: /Ajax/JobTestData
+        public async Task<IActionResult> JobTestData()
+        {
+            return Json(await dataService.GetJobTestData());
+        }
     } // controller
 
 } // namespace
