@@ -71,18 +71,8 @@ namespace AmDataVizDemo.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> TestDataAsync()
+        public async Task<IActionResult> TestData()
         {
-            List<JobTestDataViewModel> data = await _dataService.GetJobTestData();
-            ViewBag.TestDatum = data;
-            Dictionary<string, int> jobsTotalReports = new();
-            var groupedData = data.GroupBy(j => j.JobName);
-            foreach(var gdata in groupedData)
-            {
-                jobsTotalReports.Add(gdata.Key, gdata.Count());
-            }
-
-            ViewBag.TotalJobReports = jobsTotalReports;
             return View();
         }
 

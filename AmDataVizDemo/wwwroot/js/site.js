@@ -12,7 +12,6 @@ jQuery(document).ready(function ($) {
         loadForecast();
         console.log("done forecasting.");
     });
-    $('#job-test-data-table').DataTable();
 });
 
 function loadSupplierJson() {

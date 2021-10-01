@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Test Data";
 }
+<script src="~/js/test_data.js" asp-append-version="true" defer="defer"></script>
 
 <!-- Start Breadcrumbbar -->
 <div class="breadcrumbbar">
@@ -24,13 +25,6 @@
 <!-- End Breadcrumbbar -->
 <!-- Start Contentbar -->
 <div class="contentbar">
-
-    <p>Refer to the <em>Test Report</em> page on <a href="https://lee486.shinyapps.io/AMNOW-ForecastingAnalytics/">Su-Ah's R Shiny mockup</a></p>
-
-    <p>Provide a data table of test data here. Incorporate some of the aspects of Su-Ah's work on the Test Report page.</p>
-
-    <p>Tidy this up- chart labels etc.</p>
-
     <div class="grid-row">
         <div class="card col-12">
             <ul class="nav nav-tabs" id="jobGraphTabs" role="tablist">
@@ -38,36 +32,36 @@
                     <a class="nav-link active" id="job-table-tab" data-toggle="tab" href="#job-table" role="tab" aria-controls="job table" aria-selected="true">Job Table</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="job-bar-chart-tab" data-toggle="tab" href="#job-bar-chart" role="tab" aria-controls="profile" aria-selected="false">Job Bar Chart</a>
+                    <a class="nav-link" id="job-bar-chart-tab" data-toggle="tab" href="#job-bar-chart" role="tab" aria-controls="job bar chart" aria-selected="false">Job Bar Chart</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="job-table" role="tabpanel" aria-labelledby="job-table-tab">
                     <table class="dataTable display" id="job-test-data-table">
                         <thead>
-                            <th>Job Name</th>
-                            <th>Number of DataPoints</th>
+                            <tr>
+                                <th>Job Name</th>
+                                <th>Number of DataPoints</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            @foreach (string key in ViewBag.TotalJobReports.Keys)
-                            {
                                 <tr>
-                                    <td>@key</td>
-                                    <td>@ViewBag.TotalJobReports[key]</td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
-                            }
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane fade" id="job-bar-chart" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="job-bar-chart" role="tabpanel" aria-labelledby="job-bar-chart">
+                    <div id="job-bart-chart-container" style="width:100%; height:400px;"></div>
+                </div>
             </div>
         </div>
-    
     </div>
-    <div class="grid-row">
+    <div class="grid-row mt-3">
         <div class="col-12 card">
             <h2>All Test Reports</h2>
-            <table class="dataTable display" id="job-test-data-table">
+            <table class="dataTable display" id="all-test-data-table">
                 <thead>
                     <tr>
                         <th>Job Name</th>
@@ -80,18 +74,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (JobTestDataViewModel data in ViewBag.TestDatum)
-                    {
-                        <tr>
-                            <td>@data.JobName</td>
-                            <td>@data.SupplierName</td>
-                            <td>@data.StepName</td>
-                            <td>@data.EquipmentType</td>
-                            <td>@data.KpiName</td>
-                            <td>@data.KpiValue</td>
-                            <td>@data.KpiUnits</td>
-                        </tr>
-                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
