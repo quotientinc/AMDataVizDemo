@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AmDataVizDemo.Models;
+using AmDataVizDemo.Services;
+using AmDataVizDemo.Models.ViewModels;
 
 namespace AmDataVizDemo.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DataService _dataService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DataService dataService)
         {
+            _dataService = dataService;
             _logger = logger;
         }
 
@@ -67,7 +71,7 @@ namespace AmDataVizDemo.Controllers
         {
             return View();
         }
-        public IActionResult TestData()
+        public async Task<IActionResult> TestData()
         {
             return View();
         }
