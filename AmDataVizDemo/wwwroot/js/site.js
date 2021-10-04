@@ -13,7 +13,8 @@ jQuery(document).ready(function ($) {
         console.log("done forecasting.");
     });
 
-    generateForecast();
+    // generateForecast();
+    generateSupplierMap()
 });
 
 function loadSupplierJson() {
@@ -235,3 +236,12 @@ function generateForecast() {
         }
     );
 };
+
+
+function generateSupplierMap() {
+    var mymap = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mymap);
+}
