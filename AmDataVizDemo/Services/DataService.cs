@@ -57,7 +57,7 @@ namespace AmDataVizDemo.Services
             timeSeriesData.SeriesName = seriesName;
 
             // for now, just read the static data from the file
-            string timeSeriesSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "timeSeriesSample.json");
+            string timeSeriesSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "timeSeriesSample.json");
             string timeSeriesDataRawJson = System.IO.File.ReadAllText(timeSeriesSampleFilePath);
 
             try
@@ -73,8 +73,22 @@ namespace AmDataVizDemo.Services
             return timeSeriesData;
         }
 
-        public DataService()
+        public async Task<LatLonData> GetLatLonData()
         {
+            LatLonData LatLonData = new LatLonData();
+            string latLonSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "supplierLatLon.geojson");
+            string LatLonDataRawJson = System.IO.File.ReadAllText(latLonSampleFilePath);
+
+            try
+            {
+                List<LatLonData> data = JsonConvert.DeserializeObject<List<LatLonData>>(LatLonDataRawJson);
+            }
+            catch (Exception ex)
+            {
+                //@todo return an error to the front end
+            }
+
+            return LatLonData;
         }
     }
 }

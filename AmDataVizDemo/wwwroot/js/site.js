@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
     });
 
     // generateForecast();
-    generateSupplierMap()
+    generateSupplierMap();
 });
 
 function loadSupplierJson() {
@@ -239,9 +239,49 @@ function generateForecast() {
 
 
 function generateSupplierMap() {
-    var mymap = L.map('map').setView([51.505, -0.09], 13);
+    var url =
+        "https://raw.githubusercontent.com/quotientinc/AMDataVizDemo/DashboardChange/AmDataVizDemo/wwwroot/data/supplierLatLon.geojson";
+    //the initial map:
+    var map = new L.map("map");
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    //call in the data:
+    var promise = $.getJSON(url);
+    promise.then(function (data) {
+        console.log(data);
+        //plotting everything:
+        var allbusinesses = L.geoJson(data, {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4,
+                    fillOpacity: 0.7,
+                    color: "black",
+                    weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.CompanyName).openPopup();
+                });
+            }
+        });
 
+    });
+    /*
+    var companyLocu = $.ajax({
+        url: "/Ajax/LatLonData",
+        type: 'GET',
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            console.log("successfully loaded: " + data);
+
+    var mymap = L.map('map').setView([51.505, -0.09], 13);
     L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mymap);
+
+        }
+    });
+
+*/
+
 }
