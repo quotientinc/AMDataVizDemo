@@ -66,13 +66,19 @@ namespace AMIPWeb.Controllers
         // GET: /Ajax/JobTestDataTotals
         public async Task<IActionResult> JobTestDataTotals()
         {
-           return Json(await dataService.GetJobTestDataTotals());
+           return Json(dataService.GetJobTestDataTotals());
         }
 
         // GET: /Ajax/JobTestData
         public async Task<IActionResult> JobTestData()
         {
-            return Json(await dataService.GetJobTestData());
+            return Json(dataService.GetJobTestData());
+        }
+
+        // GET: /Ajax/ProductionData
+        public async Task<IActionResult> ProductionData()
+        {
+            return Json(dataService.GetProductionData());
         }
     } // controller
 
