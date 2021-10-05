@@ -20,17 +20,14 @@ namespace AmDataVizDemo.Models.ViewModels
     }
     public class LatLonData
     {
-        public string name { get; set; }
-        public string material { get; set; }
-        public string state { get; set; }
-        public string type { get; set; }
+        public string Company_Name { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Build_Preparation { get; set; }
+        public string Part { get; set; }
+        public string Material { get; set; }
+        public string Type { get; set; }
         public float lat { get; set; }
         public float lon { get; set; }
-
-        public LatLonData()
-        {
-            lat = new float();
-            lon = new float();
-        }
     }
 }

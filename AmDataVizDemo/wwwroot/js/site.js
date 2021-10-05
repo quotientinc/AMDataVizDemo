@@ -239,10 +239,9 @@ function generateForecast() {
 
 
 function generateSupplierMap() {
-    var url =
-        "https://raw.githubusercontent.com/quotientinc/AMDataVizDemo/DashboardChange/AmDataVizDemo/wwwroot/data/supplierLatLon.geojson";
+    var url ="/Ajax/GetCompanyLocu";
     //the initial map:
-    var map = new L.map("map");
+    var map = L.map('map').setView([43.52, -80.61], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -250,38 +249,21 @@ function generateSupplierMap() {
     var promise = $.getJSON(url);
     promise.then(function (data) {
         console.log(data);
-        //plotting everything:
-        var allbusinesses = L.geoJson(data, {
-            pointToLayer: function (feature, latlng) {
-                return L.circleMarker(latlng, {
-                    radius: 4,
-                    fillOpacity: 0.7,
-                    color: "black",
-                    weight: 0.75
-                }).on("mouseover", function () {
-                    this.bindPopup("Company Name: " + feature.properties.CompanyName).openPopup();
-                });
+        //putting the data onto map by type:
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].material == "GLASS") {
+                L.circleMarker([data[i].lat, data[i].lon], {radius: 5, fillOpacity: 0.6, color: 'orange',})
+                    .addTo(map)
+                    .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
+            } else if (data[i].material == "POLYMER") {
+                L.circleMarker([data[i].lat, data[i].lon], {radius: 5, fillOpacity: 0.6, color: 'green',})
+                    .addTo(map)
+                    .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
+            } else{
+                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'purple', })
+                    .addTo(map)
+                    .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
             }
-        });
-
-    });
-    /*
-    var companyLocu = $.ajax({
-        url: "/Ajax/LatLonData",
-        type: 'GET',
-        async: false,
-        dataType: "json",
-        success: function (data) {
-            console.log("successfully loaded: " + data);
-
-    var mymap = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(mymap);
-
         }
     });
-
-*/
-
 }

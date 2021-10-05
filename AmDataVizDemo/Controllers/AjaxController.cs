@@ -62,11 +62,11 @@ namespace AMIPWeb.Controllers
             return Json(timeSeries);
         }
 
-        // GET: /Ajax/LatLonData
-        public async Task<IActionResult> LatLonData()
+        // GET: /Ajax/GetCompanyLocu
+        public async Task<IActionResult> GetCompanyLocu()
         {
-            LatLonData latlonData = await dataService.GetLatLonData();
-            return Json(latlonData);
+            List<LatLonData> latLonData = await dataService.GetLatLonData();
+            return Json(latLonData);
         }
 
     } // controller

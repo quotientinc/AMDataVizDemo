@@ -73,15 +73,15 @@ namespace AmDataVizDemo.Services
             return timeSeriesData;
         }
 
-        public async Task<LatLonData> GetLatLonData()
+        public async Task<List<LatLonData>> GetLatLonData()
         {
-            LatLonData LatLonData = new LatLonData();
-            string latLonSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "supplierLatLon.geojson");
+            List<LatLonData> LatLonData = new List<LatLonData>();
+            string latLonSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "supplierLatLon.json");
             string LatLonDataRawJson = System.IO.File.ReadAllText(latLonSampleFilePath);
 
             try
             {
-                List<LatLonData> data = JsonConvert.DeserializeObject<List<LatLonData>>(LatLonDataRawJson);
+                LatLonData = JsonConvert.DeserializeObject<List<LatLonData>>(LatLonDataRawJson);
             }
             catch (Exception ex)
             {
