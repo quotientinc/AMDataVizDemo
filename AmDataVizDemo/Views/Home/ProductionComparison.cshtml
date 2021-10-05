@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Production Data Comparison";
 }
+<script src="~/js/productionComparison.js" asp-append-version="true" defer="defer"></script>
 
 <!-- Start Breadcrumbbar -->
 <div class="breadcrumbbar">
@@ -24,12 +25,26 @@
 <!-- End Breadcrumbbar -->
 <!-- Start Contentbar -->
 <div class="contentbar">
-
-    <p>Refer to the <em>Comparison</em> page and the <em>Forecast</em> page on <a href="https://lee486.shinyapps.io/AMNOW-ForecastingAnalytics/">Su-Ah's R Shiny mockup</a></p>
-
-    <p>Compare a company to an average of all production in the region, or across all of the USA.</p>
-
-    <p>Do not compare one company to another.</p>
-
+    <div class="row">
+        <div class="col-4 gx-2">
+            <h4>Select Supplier</h4>
+            <div id="supplier-radio-buttons">
+                
+            </div>
+        </div>
+        <div class="col-8 gx-2">
+            <div class="container">
+                <table class="dataTable display" id="production-comparison-datatable" style="width:100%">
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row gy-3">
+        <div class="col-12">
+            <div id="production-comparison-chart" style="width:100%; height:400px;"></div>
+        </div>
+    </div>
 </div>
+
+
 <!-- End Contentbar -->

@@ -19,15 +19,9 @@ namespace AmDataVizDemo.Services
         public async Task<List<SupplierDatum>> GetSupplierData(int? Start, int? Rows)
         {
             List<SupplierDatum> supplierData = new List<SupplierDatum>();
-
-            // for now, just read the static data from the file
-            string prodSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar
-                + "data" + System.IO.Path.DirectorySeparatorChar + "prodSample.json");
-            string prodDataRawJson = System.IO.File.ReadAllText(prodSampleFilePath);
-
             try
             {
-                supplierData = JsonConvert.DeserializeObject<List<SupplierDatum>>(prodDataRawJson);
+                supplierData = GetDataFromJsonFile<List<SupplierDatum>>("prodSample.json");
 
                 if(supplierData.Count > 0) {
                     if (null == Start || Start < 0 || Start > supplierData.Count)
@@ -56,13 +50,9 @@ namespace AmDataVizDemo.Services
             TimeSeriesData timeSeriesData = new TimeSeriesData();
             timeSeriesData.SeriesName = seriesName;
 
-            // for now, just read the static data from the file
-            string timeSeriesSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "timeSeriesSample.json");
-            string timeSeriesDataRawJson = System.IO.File.ReadAllText(timeSeriesSampleFilePath);
-
             try
             {
-                List<TimeSeriesDatum> data = JsonConvert.DeserializeObject<List<TimeSeriesDatum>>(timeSeriesDataRawJson);
+                List<TimeSeriesDatum> data = GetDataFromJsonFile<List<TimeSeriesDatum>>("timeSeriesSample.json");
                 timeSeriesData.SeriesData = data;
             }
             catch (Exception ex)
@@ -72,16 +62,12 @@ namespace AmDataVizDemo.Services
 
             return timeSeriesData;
         }
-        public async Task<List<JobTestDataViewModel>> GetJobTestData()
+        public List<JobTestDataViewModel> GetJobTestData()
         {
-            // for now, just read the static data from the file
-            string jobTableDataJsonFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "testReport.json");
-            string jobTableDataRawJson = System.IO.File.ReadAllText(jobTableDataJsonFilePath);
-
             List<JobTestDataViewModel> data = new();
             try
             {
-                data = JsonConvert.DeserializeObject<List<JobTestDataViewModel>>(jobTableDataRawJson);
+                data = GetDataFromJsonFile<List<JobTestDataViewModel>>("testReport.json");
             }
             catch (Exception ex)
             {
@@ -90,13 +76,13 @@ namespace AmDataVizDemo.Services
 
             return data;
         }
-        public async Task<List<SupplierDatum>> GetJobTestDataTotals()
+        public List<SupplierDatum> GetJobTestDataTotals()
         {
-            List<JobTestDataViewModel> testData = await GetJobTestData();
+            List<JobTestDataViewModel> testData = GetJobTestData();
             var groupedData = testData.GroupBy(d => d.JobName);
 
             List<SupplierDatum> dataTotals = new();
-            foreach(var dataGroup in groupedData)
+            foreach (var dataGroup in groupedData)
             {
                 dataTotals.Add(new SupplierDatum
                 {
@@ -106,8 +92,61 @@ namespace AmDataVizDemo.Services
             }
             return dataTotals;
         }
+
+        public List<SupplierDatum> GetProductionData()
+        {
+            List<SupplierDatum> data = new();
+            try
+            {
+                data = GetDataFromJsonFile<List<SupplierDatum>>("prodSample.json");
+                List<double> globalData = new();
+                List<double> regionalData = new();
+                for(int i = 0; i < data[0].data.Count; i++)
+                {
+                    double globalTotal = 0;
+                    double regionalTotal = 0;
+                    int regionalCount = 0;
+                    for (int j = 0; j < data.Count; j++)
+                    {
+                        globalTotal += data[j].data[i];
+                        if (j % 2 == 0)
+                        {
+                            regionalTotal += data[j].data[i];
+                            regionalCount++;
+                        }
+                    }
+                    globalData.Add(globalTotal / data.Count);
+                    regionalData.Add(regionalTotal / regionalCount);
+                }
+                data.Add(new SupplierDatum { name = "Global Average", data = globalData });
+                data.Add(new SupplierDatum { name = "Regional Average", data = regionalData });
+            }
+            catch (Exception ex)
+            {
+                //@todo return an error to the front end
+            }
+
+            return data;
+        }
+
         public DataService()
         {
+        }
+
+        //Searches the wwwroot/data/ folder for the given filename. Returns the data in the file deserialzed as T.
+        private T GetDataFromJsonFile<T>(string filename)
+        {
+            T result = default;
+            string jsonFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + filename);
+            try
+            {
+                string rawJson = System.IO.File.ReadAllText(jsonFilePath);
+                result = JsonConvert.DeserializeObject<T>(rawJson);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return result;
         }
     }
 }
