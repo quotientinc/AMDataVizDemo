@@ -13,7 +13,8 @@ jQuery(document).ready(function ($) {
         console.log("done forecasting.");
     });
 
-    // generateForecast();
+    //generateForecast();
+    console.log("generate maps:")
     generateSupplierMap();
 });
 
@@ -240,30 +241,56 @@ function generateForecast() {
 
 function generateSupplierMap() {
     var url ="/Ajax/GetCompanyLocu";
-    //the initial map:
-    var map = L.map('map').setView([43.52, -80.61], 5);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
     //call in the data:
     var promise = $.getJSON(url);
     promise.then(function (data) {
-        console.log(data);
+        // console.log(data);
         //putting the data onto map by type:
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].material == "GLASS") {
-                L.circleMarker([data[i].lat, data[i].lon], {radius: 5, fillOpacity: 0.6, color: 'orange',})
-                    .addTo(map)
-                    .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
-            } else if (data[i].material == "POLYMER") {
-                L.circleMarker([data[i].lat, data[i].lon], {radius: 5, fillOpacity: 0.6, color: 'green',})
-                    .addTo(map)
-                    .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
-            } else{
-                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'purple', })
-                    .addTo(map)
-                    .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
-            }
-        }
+        makeSupplierMap(data);
+        makeTypeMap(data)
     });
+}
+function makeSupplierMap(data) {
+    var map = L.map('materialMap');
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    console.log("supplier map inputs")
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].material == "GLASS") {
+            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'orange', })
+                .addTo(map)
+                .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
+        } else if (data[i].material == "POLYMER") {
+            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'green', })
+                .addTo(map)
+                .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
+        } else {
+            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'purple', })
+                .addTo(map)
+                .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
+        }
+    }
+}
+function makeTypeMap(data) {
+    console.log("type map inputs")
+    var map = L.map('equipmentMap');
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].type == "Part Supplier") {
+            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'orange', })
+                .addTo(map)
+                .bindPopup("Name: " + data[i].company_Name + "<br /> type: " + data[i].type);
+        } else if (data[i].type == "Equipment Supplier") {
+            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'green', })
+                .addTo(map)
+                .bindPopup("Name: " + data[i].company_Name + "<br /> type: " + data[i].type);
+        } else {
+            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'purple', })
+                .addTo(map)
+                .bindPopup("Name: " + data[i].company_Name + "<br /> type: " + data[i].type);
+        }
+    }
 }
