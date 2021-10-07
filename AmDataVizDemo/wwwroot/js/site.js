@@ -14,7 +14,6 @@ jQuery(document).ready(function ($) {
     });
 
     //generateForecast();
-    console.log("generate maps:")
     generateSupplierMap();
 });
 
@@ -251,12 +250,12 @@ function generateSupplierMap() {
     });
 }
 function makeSupplierMap(data) {
-    var map = L.map('materialMap');
+    var map = L.map('materialMap').setView([40.63, -89.39], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    console.log("supplier map inputs")
     for (var i = 0; i < data.length; i++) {
+        console.log("inside loop");
         if (data[i].material == "GLASS") {
             L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'orange', })
                 .addTo(map)
@@ -273,8 +272,7 @@ function makeSupplierMap(data) {
     }
 }
 function makeTypeMap(data) {
-    console.log("type map inputs")
-    var map = L.map('equipmentMap');
+    var map = L.map('equipmentMap').setView([40.63, -89.39], 5);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
