@@ -14,6 +14,7 @@ jQuery(document).ready(function ($) {
     });
 
     //generateForecast();
+    generateGenMap();
     generateSupplierMap();
 });
 
@@ -237,58 +238,62 @@ function generateForecast() {
     );
 };
 
-
+function generateGenMap() {
+    var map = L.map('map').setView([40.63, -89.39], 5);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+};
 function generateSupplierMap() {
     var url ="/Ajax/GetCompanyLocu";
     //call in the data:
     var promise = $.getJSON(url);
     promise.then(function (data) {
-        // console.log(data);
-        //putting the data onto map by type:
-        makeSupplierMap(data);
-        makeTypeMap(data)
+        //the initial map:
+        var map = new L.map("map");
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        //call in the data:
+        var promise = $.getJSON(url);
+        promise.then(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                marker = L.circleMarker([data[i].lat, data[i].lon], {
+                    radius: 5,
+                    fillOpacity: 0.6,
+                    color: "orange"
+                })
+                layerGroup.addLayer(allbusinesses);
+            }
+            //split map:
+
+
+
+            //sets the zoom to auto-focus everyone on the map
+            map.fitBounds(allbusinesses.getBounds(), {
+                padding: [50, 50]
+            });
+
+            //add the layers onto the map:
+            allbusinesses.addTo(map);
+            byMat.addTo(map);
+            byType.addTo(map);
+            //make the buttons toggleable
+            $("#All").click(function () {
+                map.removeLayer(allbusinesses);
+                map.addLayer(byMat);
+                map.addLayer(byType);
+            });
+            $("#MatMap").click(function () {
+                map.removeLayer(allbusinesses);
+                map.addLayer(byMat);
+                map.removeLayer(byType);
+            });
+            $("#TypeMap").click(function () {
+                map.removeLayer(allbusinesses);
+                map.removeLayer(byMat);
+                map.removeLayer(byType);
+            });
+        });
     });
-}
-function makeSupplierMap(data) {
-    var map = L.map('materialMap').setView([40.63, -89.39], 5);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    for (var i = 0; i < data.length; i++) {
-        console.log("inside loop");
-        if (data[i].material == "GLASS") {
-            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'orange', })
-                .addTo(map)
-                .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
-        } else if (data[i].material == "POLYMER") {
-            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'green', })
-                .addTo(map)
-                .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
-        } else {
-            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'purple', })
-                .addTo(map)
-                .bindPopup("Name: " + data[i].company_Name + "<br /> Material: " + data[i].material);
-        }
-    }
-}
-function makeTypeMap(data) {
-    var map = L.map('equipmentMap').setView([40.63, -89.39], 5);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].type == "Part Supplier") {
-            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'orange', })
-                .addTo(map)
-                .bindPopup("Name: " + data[i].company_Name + "<br /> type: " + data[i].type);
-        } else if (data[i].type == "Equipment Supplier") {
-            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'green', })
-                .addTo(map)
-                .bindPopup("Name: " + data[i].company_Name + "<br /> type: " + data[i].type);
-        } else {
-            L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: 'purple', })
-                .addTo(map)
-                .bindPopup("Name: " + data[i].company_Name + "<br /> type: " + data[i].type);
-        }
-    }
 }

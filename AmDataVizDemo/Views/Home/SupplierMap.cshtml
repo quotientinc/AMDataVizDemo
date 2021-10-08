@@ -34,22 +34,16 @@
             <h2>Supplier Map</h2>
             <p> Additional information about our suppliers.</p>
         </div>
-        <!-- Tab links -->
-        <div class="tab">
-            <button class="tablinks" data-content="material-map-tabcontent">Supplier Material Map</button>
-            <button class="tablinks" data-content="equipment-map-tabcontent">Supplier Equipment Map</button>
-        </div>
-        <!-- Tab Content  -->
-        <div id="material-map-tabcontent" class="tabcontent hidden">
-            <div class="box">
-                <div id="materialMap"></div>
-            </div>
-        </div>
 
-        <div id="equipment-map-tabcontent" class="tabcontent hidden">
-            <div class="box">
-                <div id="equipmentMap"></div>
-            </div>
+        <!-- button toggles  -->
+        <div class="btn-group">
+            <button type="button" id="All" class="btn btn-success">All Suppliers</button>
+            <button type="button" id="MatMap" class="btn btn-primary">By Material</button>
+            <button type="button" id="TypeMap" class="btn btn-danger">By Type</button>
+        </div>
+        <!-- actual map  -->
+        <div class="box">
+            <div id="map"></div>
         </div>
 
     </div>

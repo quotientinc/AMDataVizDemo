@@ -14,11 +14,7 @@
     width: 90%;
     height: 600px;
 }
-#materialMap {
-    width: 90%;
-    height: 500px;
-}
-#equipmentMap {
+#map, #materialMap, #equipmentMap {
     width: 90%;
     height: 500px;
 }
