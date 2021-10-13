@@ -13,9 +13,11 @@ jQuery(document).ready(function ($) {
         console.log("done forecasting.");
     });
 
-    //generateForecast();
-    generateGenMap();
-    generateSupplierMap();
+    //generateForecast(); 
+
+    //comment out one or the other supplier map to see
+    generateSupplierButtonMap(); //show: (1) supplier map with togglable layer controls for supplier materials (polymer, glass, metal)
+    //generateGenMap(); //shows: button toggle for layers
 });
 
 function loadSupplierJson() {
@@ -239,61 +241,160 @@ function generateForecast() {
 };
 
 function generateGenMap() {
-    var map = L.map('map').setView([40.63, -89.39], 5);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-};
-function generateSupplierMap() {
-    var url ="/Ajax/GetCompanyLocu";
-    //call in the data:
+    //setting map variables: 
+    var all = L.layerGroup();
+    var polymer = L.layerGroup();
+    var glass = L.layerGroup();
+    var metal = L.layerGroup();
+    var url = "/Ajax/GetCompanyLocu";
     var promise = $.getJSON(url);
     promise.then(function (data) {
-        //the initial map:
-        var map = new L.map("map");
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        //call in the data:
-        var promise = $.getJSON(url);
-        promise.then(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                marker = L.circleMarker([data[i].lat, data[i].lon], {
-                    radius: 5,
-                    fillOpacity: 0.6,
-                    color: "orange"
-                })
-                layerGroup.addLayer(allbusinesses);
-            }
-            //split map:
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].material == "GLASS") {
+                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "orange" }).bindPopup("Name: " + data[i].company_Name + "<br /> Type: " + data[i].material).addTo(glass).addTo(all);
+                } else if (data[i].material == "POLYMER") {
+                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "green" }).bindPopup("Name: " + data[i].company_Name + "<br /> Type: " + data[i].material).addTo(polymer).addTo(all);
+                } else {
+                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "purple" }).bindPopup("Name: " + data[i].company_Name + "<br /> Type: " + data[i].material).addTo(metal).addTo(all);
+                }
+            // marker = L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "orange" });
+            // layerGroup.addLayer(companies);
+        }
+    });
 
+    var map = L.map('map', {
+        center: [40.63, -89.39], zoom: 5, layers: [all] // set the default the later
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    var overlays = {
+        "All" : all,
+        "Glass": glass,
+        "Polymer": polymer,
+        "Metal": metal
+    };
+    L.control.layers(overlays, null).addTo(map);
+};
 
-
-            //sets the zoom to auto-focus everyone on the map
-            map.fitBounds(allbusinesses.getBounds(), {
-                padding: [50, 50]
-            });
-
-            //add the layers onto the map:
-            allbusinesses.addTo(map);
-            byMat.addTo(map);
-            byType.addTo(map);
-            //make the buttons toggleable
-            $("#All").click(function () {
-                map.removeLayer(allbusinesses);
-                map.addLayer(byMat);
-                map.addLayer(byType);
-            });
-            $("#MatMap").click(function () {
-                map.removeLayer(allbusinesses);
-                map.addLayer(byMat);
-                map.removeLayer(byType);
-            });
-            $("#TypeMap").click(function () {
-                map.removeLayer(allbusinesses);
-                map.removeLayer(byMat);
-                map.removeLayer(byType);
-            });
+//map with the buttons.
+function generateSupplierButtonMap() {
+    var map = L.map("map", { center: [40.63, -89.39] }); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+    var url = "https://raw.githubusercontent.com/quotientinc/AMDataVizDemo/DashboardChange/AmDataVizDemo/wwwroot/data/supplierLatLon.json";
+    var promise = $.getJSON(url);
+    promise.then(function (data) {
+        var jsonFeatures = [];
+        data.forEach(function (point) {
+            var lat = point.lat;
+            var lon = point.lon;
+            var feature = {
+                type: "Feature",
+                properties: point,
+                geometry: {
+                    type: "Point",
+                    coordinates: [lon, lat]
+                }
+            };
+            jsonFeatures.push(feature);
         });
+        var gj = {
+            type: "FeatureCollection",
+            features: jsonFeatures
+        };
+        //plotting everything:
+        var allbusinesses = L.geoJson(gj, {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4,
+                    fillOpacity: 0.7,
+                    color: "black",
+                    weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                });
+            }
+        });
+        //split by material type:
+        //polymer
+        var polymer = L.geoJson(gj, {
+            filter: function (feature, layer) {
+                return feature.properties.Material == "POLYMER";
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4,
+                    fillOpacity: 0.7,
+                    color: "purple",
+                    weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                });
+            }
+        });
+        //metal
+        var metal = L.geoJson(gj, {
+            filter: function (feature, layer) {
+                return feature.properties.Material == "METAL";
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4,
+                    fillOpacity: 0.7,
+                    color: "orange",
+                    weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                });
+            }
+        });
+        //glass
+        var glass = L.geoJson(gj, {
+            filter: function (feature, layer) {
+                return feature.properties.Material == "GLASS";
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4,
+                    fillOpacity: 0.7,
+                    color: "green",
+                    weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                });
+            }
+        });
+        //sets the zoom to auto-focus everyone on the map
+        map.fitBounds(allbusinesses.getBounds(), {
+            padding: [50, 50]
+        });
+        //add the layers onto the map:
+        allbusinesses.addTo(map);
+        glass.addTo(map);
+        metal.addTo(map);
+        polymer.addTo(map);
+        //make the buttons toggleable
+        $("#allSup").click(function () {
+            map.removeLayer(allbusinesses);
+            map.addLayer(glass);
+            map.addLayer(metal);
+            map.addLayer(polymer);
+        });
+        $("#BCer").click(function () {
+            map.removeLayer(allbusinesses);
+            map.addLayer(glass);
+            map.removeLayer(metal);
+            map.removeLayer(polymer);
+        });
+        $("#BMet").click(function () {
+            map.removeLayer(allbusinesses);
+            map.removeLayer(glass);
+            map.addLayer(metal);
+            map.removeLayer(polymer);
+        });
+        $("#BPol").click(function () {
+            map.removeLayer(allbusinesses);
+            map.removeLayer(glass);
+            map.removeLayer(metal);
+            map.addLayer(polymer);
+        });
+
     });
 }
