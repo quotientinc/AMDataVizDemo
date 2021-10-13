@@ -15,9 +15,7 @@ jQuery(document).ready(function ($) {
 
     //generateForecast(); 
 
-    //comment out one or the other supplier map to see
     generateSupplierButtonMap(); //show: (1) supplier map with togglable layer controls for supplier materials (polymer, glass, metal)
-    //generateGenMap(); //shows: button toggle for layers
 });
 
 function loadSupplierJson() {
@@ -240,45 +238,10 @@ function generateForecast() {
     );
 };
 
-function generateGenMap() {
-    //setting map variables: 
-    var all = L.layerGroup();
-    var polymer = L.layerGroup();
-    var glass = L.layerGroup();
-    var metal = L.layerGroup();
-    var url = "/Ajax/GetCompanyLocu";
-    var promise = $.getJSON(url);
-    promise.then(function (data) {
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].material == "GLASS") {
-                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "orange" }).bindPopup("Name: " + data[i].company_Name + "<br /> Type: " + data[i].material).addTo(glass).addTo(all);
-                } else if (data[i].material == "POLYMER") {
-                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "green" }).bindPopup("Name: " + data[i].company_Name + "<br /> Type: " + data[i].material).addTo(polymer).addTo(all);
-                } else {
-                L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "purple" }).bindPopup("Name: " + data[i].company_Name + "<br /> Type: " + data[i].material).addTo(metal).addTo(all);
-                }
-            // marker = L.circleMarker([data[i].lat, data[i].lon], { radius: 5, fillOpacity: 0.6, color: "orange" });
-            // layerGroup.addLayer(companies);
-        }
-    });
-
-    var map = L.map('map', {
-        center: [40.63, -89.39], zoom: 5, layers: [all] // set the default the later
-    });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-    var overlays = {
-        "All" : all,
-        "Glass": glass,
-        "Polymer": polymer,
-        "Metal": metal
-    };
-    L.control.layers(overlays, null).addTo(map);
-};
-
 //map with the buttons.
 function generateSupplierButtonMap() {
     var map = L.map("map", { center: [40.63, -89.39] }); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-    var url = "https://raw.githubusercontent.com/quotientinc/AMDataVizDemo/DashboardChange/AmDataVizDemo/wwwroot/data/supplierLatLon.json";
+    var url = "/Ajax/GetCompanyLocu";
     var promise = $.getJSON(url);
     promise.then(function (data) {
         var jsonFeatures = [];
@@ -303,12 +266,9 @@ function generateSupplierButtonMap() {
         var allbusinesses = L.geoJson(gj, {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
-                    radius: 4,
-                    fillOpacity: 0.7,
-                    color: "black",
-                    weight: 0.75
+                    radius: 4, fillOpacity: 0.7, color: "black", weight: 0.75
                 }).on("mouseover", function () {
-                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
                 });
             }
         });
@@ -316,48 +276,76 @@ function generateSupplierButtonMap() {
         //polymer
         var polymer = L.geoJson(gj, {
             filter: function (feature, layer) {
-                return feature.properties.Material == "POLYMER";
+                return feature.properties.material == "POLYMER";
             },
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
-                    radius: 4,
-                    fillOpacity: 0.7,
-                    color: "purple",
-                    weight: 0.75
+                    radius: 4, fillOpacity: 0.7, color: "#00B4D8", weight: 0.75
                 }).on("mouseover", function () {
-                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
                 });
             }
         });
         //metal
         var metal = L.geoJson(gj, {
             filter: function (feature, layer) {
-                return feature.properties.Material == "METAL";
+                return feature.properties.material == "METAL";
             },
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
-                    radius: 4,
-                    fillOpacity: 0.7,
-                    color: "orange",
-                    weight: 0.75
+                    radius: 4, fillOpacity: 0.7, color: "red", weight: 0.75
                 }).on("mouseover", function () {
-                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
                 });
             }
         });
         //glass
         var glass = L.geoJson(gj, {
             filter: function (feature, layer) {
-                return feature.properties.Material == "GLASS";
+                return feature.properties.material == "GLASS";
             },
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
-                    radius: 4,
-                    fillOpacity: 0.7,
-                    color: "green",
-                    weight: 0.75
+                    radius: 4, fillOpacity: 0.7, color: "blue", weight: 0.75
                 }).on("mouseover", function () {
-                    this.bindPopup("Company Name: " + feature.properties.Company_Name).openPopup();
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
+                });
+            }
+        });
+
+        var composite = L.geoJson(gj, {
+            filter: function (feature, layer) {
+                return feature.properties.material == "COMPOSITE";
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4, fillOpacity: 0.7, color: "green", weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
+                });
+            }
+        });
+        var sand = L.geoJson(gj, {
+            filter: function (feature, layer) {
+                return feature.properties.material == "SAND";
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4, fillOpacity: 0.7, color: "gray", weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
+                });
+            }
+        });
+        var wax = L.geoJson(gj, {
+            filter: function (feature, layer) {
+                return feature.properties.material == "WAX";
+            },
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 4, fillOpacity: 0.7, color: "yellow", weight: 0.75
+                }).on("mouseover", function () {
+                    this.bindPopup("Company Name: " + feature.properties.company_Name).openPopup();
                 });
             }
         });
@@ -370,30 +358,72 @@ function generateSupplierButtonMap() {
         glass.addTo(map);
         metal.addTo(map);
         polymer.addTo(map);
+        composite.addTo(map);
+        wax.addTo(map);
+        sand.addTo(map);
         //make the buttons toggleable
         $("#allSup").click(function () {
             map.removeLayer(allbusinesses);
             map.addLayer(glass);
             map.addLayer(metal);
             map.addLayer(polymer);
+            map.addLayer(composite);
+            map.addLayer(wax);
+            map.addLayer(sand);
         });
         $("#BCer").click(function () {
             map.removeLayer(allbusinesses);
             map.addLayer(glass);
             map.removeLayer(metal);
             map.removeLayer(polymer);
+            map.removeLayer(wax);
+            map.removeLayer(sand);
+            map.removeLayer(composite);
         });
         $("#BMet").click(function () {
             map.removeLayer(allbusinesses);
             map.removeLayer(glass);
             map.addLayer(metal);
             map.removeLayer(polymer);
+            map.removeLayer(wax);
+            map.removeLayer(sand);
+            map.removeLayer(composite);
         });
         $("#BPol").click(function () {
             map.removeLayer(allbusinesses);
             map.removeLayer(glass);
             map.removeLayer(metal);
             map.addLayer(polymer);
+            map.removeLayer(wax);
+            map.removeLayer(sand);
+            map.removeLayer(composite);
+        });
+        $("#BComp").click(function () {
+            map.removeLayer(allbusinesses);
+            map.removeLayer(glass);
+            map.removeLayer(metal);
+            map.removeLayer(polymer);
+            map.removeLayer(wax);
+            map.removeLayer(sand);
+            map.addLayer(composite);
+        });
+        $("#BSan").click(function () {
+            map.removeLayer(allbusinesses);
+            map.removeLayer(glass);
+            map.removeLayer(metal);
+            map.removeLayer(polymer);
+            map.removeLayer(wax);
+            map.addLayer(sand);
+            map.removeLayer(composite);
+        });
+        $("#BWax").click(function () {
+            map.removeLayer(allbusinesses);
+            map.removeLayer(glass);
+            map.removeLayer(metal);
+            map.removeLayer(polymer);
+            map.addLayer(wax);
+            map.removeLayer(sand);
+            map.removeLayer(composite);
         });
 
     });

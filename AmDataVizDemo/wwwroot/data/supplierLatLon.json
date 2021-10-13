@@ -9,7 +9,7 @@
    "lat": 41.04355,
    "lon": -81.5148,
    "Part": 1,
-   "Material": "GLASS",
+   "Material": "SAND",
    "Type": "Part Supplier"
  },
  {
@@ -74,7 +74,7 @@
    "lat": 41.06684,
    "lon": -81.4794,
    "Part": 6,
-   "Material": "GLASS",
+   "Material": "COMPOSITE",
    "Type": "Material Supplier"
  },
  {
@@ -126,7 +126,7 @@
    "lat": 40.49673,
    "lon": -80.60674,
    "Part": 10,
-   "Material": "GLASS",
+   "Material": "WAX",
    "Type": "Part Supplier"
  },
  {
@@ -165,7 +165,7 @@
    "lat": 40.39813,
    "lon": -80.18561,
    "Part": 13,
-   "Material": "GLASS",
+   "Material": "COMPOSITE",
    "Type": "Part Supplier"
  },
  {
@@ -178,7 +178,7 @@
    "lat": 30.44373,
    "lon": -97.63053,
    "Part": 1,
-   "Material": "POLYMER",
+   "Material": "SAND",
    "Type": "Equipment Supplier"
  },
  {
@@ -204,7 +204,7 @@
    "lat": 40.42504,
    "lon": -79.95309,
    "Part": 3,
-   "Material": "POLYMER",
+   "Material": "WAX",
    "Type": "Part Supplier"
  },
  {
@@ -269,7 +269,7 @@
    "lat": 41.43511,
    "lon": -81.49702,
    "Part": 8,
-   "Material": "POLYMER",
+   "Material": "COMPOSITE",
    "Type": "Material Supplier"
  },
  {
@@ -282,7 +282,7 @@
    "lat": 41.46668,
    "lon": -81.93057,
    "Part": 9,
-   "Material": "POLYMER",
+   "Material": "SAND",
    "Type": "Part Supplier"
  },
  {
@@ -295,7 +295,7 @@
    "lat": 41.46365,
    "lon": -81.95167,
    "Part": 10,
-   "Material": "POLYMER",
+   "Material": "WAX",
    "Type": "Equipment Supplier"
  },
  {
@@ -373,7 +373,7 @@
    "lat": 41.10224,
    "lon": -80.73113,
    "Part": 3,
-   "Material": "METAL",
+   "Material": "COMPOSITE",
    "Type": "Equipment Supplier"
  },
  {
@@ -386,7 +386,7 @@
    "lat": 41.10252,
    "lon": -80.65217,
    "Part": 4,
-   "Material": "METAL",
+   "Material": "SAND",
    "Type": "Material Supplier"
  },
  {
@@ -399,7 +399,7 @@
    "lat": 40.29524,
    "lon": -78.90697,
    "Part": 5,
-   "Material": "METAL",
+   "Material": "WAX",
    "Type": "Part Supplier"
  },
  {
@@ -477,7 +477,7 @@
    "lat": 40.75043,
    "lon": -82.47067,
    "Part": 11,
-   "Material": "METAL",
+   "Material": "COMPOSITE",
    "Type": "Part Supplier"
  },
  {
@@ -490,7 +490,7 @@
    "lat": 41.51765,
    "lon": -81.44983,
    "Part": 12,
-   "Material": "METAL",
+   "Material": "SAND",
    "Type": "Equipment Supplier"
  },
  {
@@ -503,7 +503,7 @@
    "lat": 41.62976,
    "lon": -80.15583,
    "Part": 13,
-   "Material": "METAL",
+   "Material": "WAX",
    "Type": "Material Supplier"
  }
 ]
