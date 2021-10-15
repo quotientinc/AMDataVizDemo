@@ -2,6 +2,11 @@
 "use strict";
 
 jQuery(document).ready(function ($) {
+    //production forecast page:
+    if (undefined != typeof ($('#forecastline')) && $('#forecastline').length) {
+        generateForecast();
+    }
+    //production charts page:
     loadSupplierJson();
     $('.tablinks').on('click', function (evt) {
         showChart($(this).attr('data-content'));
@@ -12,10 +17,17 @@ jQuery(document).ready(function ($) {
         loadForecast();
         console.log("done forecasting.");
     });
-
-    //generateForecast(); 
-
-    generateSupplierButtonMap(); //show: (1) supplier map with togglable layer controls for supplier materials (polymer, glass, metal)
+    //production comparison page:
+    
+    if (undefined != typeof ($('#ddSelect')) && $('#ddSelect').length) {
+        dropdownMenuSupport(); // dropdown
+        comparisoncharts(); //chart
+    }
+    
+    //supplier map page:
+    if (undefined != typeof ($('#map')) && $('#map').length) {
+        generateSupplierButtonMap(); //show: (1) supplier map with togglable layer controls for supplier materials (polymer, glass, metal)
+    }
 });
 
 function loadSupplierJson() {
@@ -28,7 +40,7 @@ function loadSupplierJson() {
         success: function (data) {
             generateChart("barchart", "bar", data);
             generateChart("linechart", "line", data);
-            generateChart("boxplot", "boxplot", data);
+            //generateChart("boxplot", "boxplot", data); //boxplot needs different x/y values
         }
     });
 }
@@ -53,7 +65,7 @@ function showChart(chartName) {
     $('.tablinks').removeClass('active'); // make all tablinks elements inactive
     $('#' + chartName).removeClass('hidden'); // show the chart
 }
-
+//generic charts
 function generateChart(chartId, chartType, data) {
     // generate Highcharts chart
     return Highcharts.chart(chartId, {
@@ -70,7 +82,7 @@ function generateChart(chartId, chartType, data) {
         },
         series: data
     });
-};
+}
 
 function generateForecast() {
     // generate Highcharts chart
@@ -236,9 +248,44 @@ function generateForecast() {
             ]
         }
     );
-};
+}
 
-//map with the buttons.
+//company comparison
+function dropdownMenuSupport() {
+    var url = "/Ajax/SupplierData";
+    var promise = $.getJSON(url);
+    promise.then(function (data) {
+        data.forEach(function (e, i) {
+            $('#ddSelect').append('<option value="' + e.name + '">' + e.name + '</option>');
+        });
+    });
+}
+function comparisoncharts() {
+    let chart = Highcharts.chart('comparisonChart', {
+        series: [{
+            name: 'People',
+            data: [1, 2, 3],
+        }],
+    });
+    var select = document.getElementById('ddSelect');
+    select.addEventListener('change', (e) => {
+        let option = e.target.value,
+            data1 = [1, 2, 3],
+            data2 = [9, 8, 7];
+
+        if (option === 'NobleTek') {
+            chart.addSeries({
+                data: data2
+            });
+        }
+        if (option === 'One') {
+            chart.series[1].remove();
+        }
+    });
+
+}
+
+//supplie rmap
 function generateSupplierButtonMap() {
     var map = L.map("map", { center: [40.63, -89.39] }); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
     var url = "/Ajax/GetCompanyLocu";
