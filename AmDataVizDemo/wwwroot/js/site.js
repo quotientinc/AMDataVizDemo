@@ -1,5 +1,4 @@
-﻿
-"use strict";
+﻿"use strict";
 
 jQuery(document).ready(function ($) {
     //production forecast page:
@@ -7,18 +6,20 @@ jQuery(document).ready(function ($) {
         generateForecast();
     }
     //production charts page:
-    loadSupplierJson();
-    $('.tablinks').on('click', function (evt) {
-        showChart($(this).attr('data-content'));
-        $(this).removeClass('active').addClass('active');
-    });
+    if (undefined != typeof ($('#barchart')) && $('#barchart').length) {
+        loadSupplierJson();
+        $('.tablinks').on('click', function (evt) {
+            showChart($(this).attr('data-content'));
+            $(this).removeClass('active').addClass('active');
+        });
+    }
     $('#forecast-arima').on('click', function () {
         console.log("forecasting...");
         loadForecast();
         console.log("done forecasting.");
     });
-    //production comparison page:
-    
+
+    //production comparison page:    
     if (undefined != typeof ($('#ddSelect')) && $('#ddSelect').length) {
         dropdownMenuSupport(); // dropdown
         comparisoncharts(); //chart
@@ -40,7 +41,7 @@ function loadSupplierJson() {
         success: function (data) {
             generateChart("barchart", "bar", data);
             generateChart("linechart", "line", data);
-            //generateChart("boxplot", "boxplot", data); //boxplot needs different x/y values
+            generateChart("column", "column", data); //boxplot needs different x/y values
         }
     });
 }
@@ -48,7 +49,6 @@ function loadSupplierJson() {
 function loadForecast() {
     // hide other tab content
     $('.tabcontent').removeClass('hidden').addClass('hidden'); // hide all tabcontent elements
-
     $.ajax({
         url: "/Ajax/ForecastArima",
         type: 'GET',
@@ -65,6 +65,7 @@ function showChart(chartName) {
     $('.tablinks').removeClass('active'); // make all tablinks elements inactive
     $('#' + chartName).removeClass('hidden'); // show the chart
 }
+
 //generic charts
 function generateChart(chartId, chartType, data) {
     // generate Highcharts chart
@@ -261,31 +262,36 @@ function dropdownMenuSupport() {
     });
 }
 function comparisoncharts() {
-    let chart = Highcharts.chart('comparisonChart', {
-        series: [{
-            name: 'People',
-            data: [1, 2, 3],
-        }],
-    });
-    var select = document.getElementById('ddSelect');
-    select.addEventListener('change', (e) => {
-        let option = e.target.value,
-            data1 = [1, 2, 3],
-            data2 = [9, 8, 7];
-
-        if (option === 'NobleTek') {
-            chart.addSeries({
-                data: data2
-            });
-        }
-        if (option === 'One') {
-            chart.series[1].remove();
-        }
-    });
+    $.ajax({
+        url: "/Ajax/SupplierData",
+        type: 'GET',
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            $("#ddSelect").change(function () {
+                var end = this.value;
+                data.forEach(function (e, i) {
+                    if (String(end) == String(e.name)) {
+                        var added = e.data.map(function (x) { return x * .2 }); //for fake regional data
+                        var series = [{
+                            name: e.name,
+                            data: e.data
+                        },
+                            {
+                                name: "North",
+                                data: added
+                            }];
+                        generateChart("comparisonChart", "line", series);
+                    }
+                }) //end of data.foreach
+            }); //end of dropdown
+        } //end of success:
+    }); //end of ajax
+    
 
 }
 
-//supplie rmap
+//supplier map
 function generateSupplierButtonMap() {
     var map = L.map("map", { center: [40.63, -89.39] }); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
     var url = "/Ajax/GetCompanyLocu";
