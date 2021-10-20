@@ -269,27 +269,30 @@ function comparisoncharts() {
         async: false,
         dataType: "json",
         success: function (data) {
-            $("#companySelect").change(function () {
-                var comp = this.value;
+            $("#CompRegSubmit").click(function () {
+                console.log("button");
+                var cdd = document.getElementById("companySelect");
+                var comp = cdd.options[cdd.selectedIndex].value;
                 console.log(comp);
-                    var reg = $('#regionSelect :selected').text();
-                    console.log(reg);
-                    data.forEach(function (e, i) {
-                        if (String(comp) == String(e.name)) {
-                            var multipler = Math.random();
-                            var north = e.data.map(function (x) { return x * multipler });
-                            var series = [{
-                                name: (e.name + "CONUS"),
-                                data: e.data
-                            },
-                            {
-                                name: "North",
-                                data: north
-                            }];
-                            generateChart("comparisonChart", "line", series);
-                        }
-                    }) //end of data.foreach
-            }); //end of dropdown
+                var rdd = document.getElementById("regionSelect");
+                var reg = rdd.options[rdd.selectedIndex].value;
+                console.log(reg);
+                var multipler = Math.random(); //change the multuplier everytime region changes
+                data.forEach(function (e, i) {
+                    if (String(comp) == String(e.name)) {
+                        var regionData = e.data.map(function (x) { return x * multipler });
+                        var series = [{
+                            name: (e.name + " CONUS"),
+                            data: e.data
+                        },
+                        {
+                            name: String(reg),
+                            data: regionData
+                        }];
+                        generateChart("comparisonChart", "line", series);
+                    }
+                }) //end of data.foreach
+            });
         } //end of success:
     }); //end of ajax
 }

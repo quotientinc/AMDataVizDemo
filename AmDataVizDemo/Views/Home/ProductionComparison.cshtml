@@ -32,14 +32,19 @@
     <p>Do not compare one company to another.</p>
 
     <div class="box">
-        <select id="companySelect" name="CompanyList"> </select>
+        <select id="companySelect" name="CompanyList">
+            <option value="none" selected disabled hidden> Select a Company </option>
+        </select>
         <select id="regionSelect" name="RegionList">
+            <option value="none" selected disabled hidden> Select a Region </option>
             <option value="NE">Northeast</option>
             <option value="S">South</option>
             <option value="MW">Midwest</option>
             <option value="SW">Southwest</option>
             <option value="W">West</option>
         </select>
+
+        <button type="button" id ="CompRegSubmit" class="btn btn-primary"><i class="feather icon-send mr-2"></i> Submit</button>
 
         <div id="comparisonChart"></div>
     </div>
