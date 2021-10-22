@@ -19,9 +19,16 @@ jQuery(document).ready(function ($) {
         console.log("done forecasting.");
     });
 
+    //test comparison page:   
+    if (undefined != typeof ($('#TestChart')) && $('#TestChart').length) {
+        TestDropdownMenuSupport();
+        TestData();
+    }
+
+
     //production comparison page:    
     if (undefined != typeof ($('#companySelect')) && $('#companySelect').length) {
-        dropdownMenuSupport(); // dropdown
+        CompanyDropdownMenuSupport(); // dropdown
         comparisoncharts(); //chart
     }
     
@@ -251,9 +258,41 @@ function showChart(chartName) {
     $('#' + chartName).removeClass('hidden'); // show the chart
 }
 
+//test chart page:
+function TestDropdownMenuSupport() {
+    var url = "/Ajax/GetTestSample";
+    var promise = $.getJSON(url);
+    promise.then(function (data) {
+        data.forEach(function (e, i) {
+            $('#testSelect').append('<option value="' + e.name + '">' + e.name + '</option>');
+        });
+    });
+}
+function TestData() {
+    $.ajax({
+        url: "/Ajax/GetTestSample",
+        type: 'GET',
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            $("#testSelect").change(function () {
+                var test = $("#testSelect").val();
+                data.forEach(function (e, i) {
+                    if (String(test) == String(e.name)) {
+                        var series = [{
+                            name: e.name,
+                            data: e.data
+                        }];
+                        generateChart("TestChart", "line", series);
+                    }
+                }) //end of data.foreach
+            });
+        } //end of success:
+    }); //end of ajax
+}
 
 //production comparison page:
-function dropdownMenuSupport() {
+function CompanyDropdownMenuSupport() {
     var url = "/Ajax/SupplierData";
     var promise = $.getJSON(url);
     promise.then(function (data) {
@@ -270,13 +309,10 @@ function comparisoncharts() {
         dataType: "json",
         success: function (data) {
             $("#CompRegSubmit").click(function () {
-                console.log("button");
                 var cdd = document.getElementById("companySelect");
                 var comp = cdd.options[cdd.selectedIndex].value;
-                console.log(comp);
                 var rdd = document.getElementById("regionSelect");
                 var reg = rdd.options[rdd.selectedIndex].value;
-                console.log(reg);
                 var multipler = Math.random(); //change the multuplier everytime region changes
                 data.forEach(function (e, i) {
                     if (String(comp) == String(e.name)) {

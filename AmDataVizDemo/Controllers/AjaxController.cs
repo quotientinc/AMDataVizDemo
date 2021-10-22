@@ -69,6 +69,13 @@ namespace AMIPWeb.Controllers
             return Json(latLonData);
         }
 
+        // GET: /Ajax/GetTestSample
+        public async Task<IActionResult> GetTestSample()
+        {
+            List<TestData> testData = await dataService.GetTestData();
+            return Json(testData);
+        }
+
     } // controller
 
 } // namespace

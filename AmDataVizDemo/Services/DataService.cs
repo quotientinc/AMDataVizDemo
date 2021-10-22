@@ -19,7 +19,6 @@ namespace AmDataVizDemo.Services
         public async Task<List<SupplierDatum>> GetSupplierData(int? Start, int? Rows)
         {
             List<SupplierDatum> supplierData = new List<SupplierDatum>();
-
             // for now, just read the static data from the file
             string prodSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar
                 + "data" + System.IO.Path.DirectorySeparatorChar + "prodSample.json");
@@ -89,6 +88,23 @@ namespace AmDataVizDemo.Services
             }
 
             return LatLonData;
+        }
+
+        public async Task<List<TestData>> GetTestData()
+        {
+            List<TestData> testData = new List<TestData>();
+            string testDataSampleFilePath = System.IO.Path.GetFullPath("wwwroot" + System.IO.Path.DirectorySeparatorChar + "data" + System.IO.Path.DirectorySeparatorChar + "testSample.json");
+            string testDataDataRawJson = System.IO.File.ReadAllText(testDataSampleFilePath);
+
+            try
+            {
+                testData = JsonConvert.DeserializeObject<List<TestData>>(testDataDataRawJson);
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return testData;
         }
     }
 }

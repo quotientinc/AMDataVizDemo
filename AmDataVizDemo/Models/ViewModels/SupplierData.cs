@@ -30,4 +30,15 @@ namespace AmDataVizDemo.Models.ViewModels
         public float lat { get; set; }
         public float lon { get; set; }
     }
+
+    public class TestData
+    {
+        public string name { get; set; }
+        public List<double> data { get; set; }
+        public TestData()
+        {
+            data = new List<double>();
+        }
+    }
 }
+
