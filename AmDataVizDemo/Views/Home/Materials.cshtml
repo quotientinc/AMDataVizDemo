@@ -28,5 +28,43 @@
     <p>Refer to the <em>Test Data</em> page on <a href="https://lee486.shinyapps.io/AMNOW-ForecastingAnalytics/">Su-Ah's R Shiny mockup</a></p>
 
     <p>At the bottom of this page is a simple datatable of materials. Implement that here.</p>
+
+    <!-- buttons for export + search button: not mapped -->
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="dt-buttons btn-group">
+                <a class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
+                <a class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
+                <a class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
+                <a class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
+                <a class="btn btn-secondary buttons-print" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div id="datatable-buttons_filter" class="dataTables_filter">
+                <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable-buttons"></label>
+            </div>
+        </div>
+    </div>
+    <!-- Material table  -->
+    <!-- following: senvol-materials.json -->
+    <div class="box">
+        <table id="MaterialDataTable" class="table table-striped table-bordered dataTable no-footer dtr-inline">
+            <tr>
+                <th>Build Material Name</th>
+                <th>Material Manufacturer</th>
+                <th>Material AM Process</th>
+                <th>Ceramic </th>
+                <th>Metal</th>
+                <th>Polymer</th>
+                <th>Sand</th>
+                <th>Wax</th>
+                <th>Build Material Type</th>
+                <th>General Similar Material</th>
+                <th>Specific Similar Material</th>
+            </tr>
+        </table>
+    </div>
+
 </div>
 <!-- End Contentbar -->

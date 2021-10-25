@@ -27,5 +27,43 @@
 
     <p>Datatable of machines</p>
 
+    <!-- buttons for export + search button: not mapped-->
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="dt-buttons btn-group">
+                <a class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a>
+                <a class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a>
+                <a class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a>
+                <a class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a>
+                <a class="btn btn-secondary buttons-print" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div id="datatable-buttons_filter" class="dataTables_filter">
+                <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="datatable-buttons"></label>
+            </div>
+        </div>
+    </div>
+    <!-- Machine table  -->
+    <!-- following: senvol-machines.json -->
+    <div class="box">
+        <table id="MachineDataTable" class="table table-striped dataTable no-footer dtr-inline">
+            <tr>
+                <th>Machine Model</th>
+                <th>Machine Manufacturer</th>
+                <th>AM Process ASTM</th>
+                <th>Ceramic</th>
+                <th>Composite</th>
+                <th>Metal</th>
+                <th>Polymer</th>
+                <th>Sand</th>
+                <th>Wax</th>
+                <th>General Material Type</th>
+                <th>Similar Material Type</th>
+            </tr>
+        </table>
+    </div>
+
+
 </div>
 <!-- End Contentbar -->
