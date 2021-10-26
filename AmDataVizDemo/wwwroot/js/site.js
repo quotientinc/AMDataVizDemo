@@ -312,7 +312,7 @@ function comparisoncharts() {
                 var cdd = document.getElementById("companySelect");
                 var comp = cdd.options[cdd.selectedIndex].value;
                 var rdd = document.getElementById("regionSelect");
-                var reg = rdd.options[rdd.selectedIndex].value;
+                var reg = rdd[rdd.selectedIndex].value;
                 var multipler = Math.random(); //change the multuplier everytime region changes
                 data.forEach(function (e, i) {
                     if (String(comp) == String(e.name)) {
