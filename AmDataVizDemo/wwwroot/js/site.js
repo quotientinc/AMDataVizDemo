@@ -21,14 +21,13 @@ jQuery(document).ready(function ($) {
 
     //test comparison page:   
     if (undefined != typeof ($('#TestChart')) && $('#TestChart').length) {
-        TestDropdownMenuSupport();
+        DropdownMenuSupport("/Ajax/GetTestSample", '#testSelect');
         TestData();
     }
 
-
     //production comparison page:    
     if (undefined != typeof ($('#companySelect')) && $('#companySelect').length) {
-        CompanyDropdownMenuSupport(); // dropdown
+        DropdownMenuSupport("/Ajax/SupplierData", '#companySelect'); // dropdown
         comparisoncharts(); //chart
     }
     
@@ -37,6 +36,36 @@ jQuery(document).ready(function ($) {
         generateSupplierButtonMap(); //show: (1) supplier map with togglable layer controls for supplier materials (polymer, glass, metal)
     }
 });
+
+//misc and availiable for multiple pages:
+//dropdown functionality
+function DropdownMenuSupport(url, name) {
+    var promise = $.getJSON(url);
+    promise.then(function (data) {
+        data.forEach(function (e, i) {
+            $(name).append('<option value="' + e.name + '">' + e.name + '</option>');
+        });
+    });
+}
+//general highchart
+function generateChart(chartId, chartType, data) {
+    // generate Highcharts chart
+    return Highcharts.chart(chartId, {
+        chart: {
+            type: chartType
+        },
+        title: {
+            text: "Company Production"
+        },
+        yAxis: {
+            title: {
+                text: "Production"
+            }
+        },
+        series: data
+    });
+}
+
 
 //production forecast page:
 function generateForecast() {
@@ -204,7 +233,6 @@ function generateForecast() {
     }
     );
 }
-
 //production charts page:
 function loadSupplierJson() {
     // you could also pass parameters to the ajax function, for start and rows
@@ -218,23 +246,6 @@ function loadSupplierJson() {
             generateChart("linechart", "line", data);
             generateChart("column", "column", data); //boxplot needs different x/y values
         }
-    });
-}
-function generateChart(chartId, chartType, data) {
-    // generate Highcharts chart
-    return Highcharts.chart(chartId, {
-        chart: {
-            type: chartType
-        },
-        title: {
-            text: "Company Production"
-        },
-        yAxis: {
-            title: {
-                text: "Production"
-            }
-        },
-        series: data
     });
 }
 
@@ -259,15 +270,6 @@ function showChart(chartName) {
 }
 
 //test chart page:
-function TestDropdownMenuSupport() {
-    var url = "/Ajax/GetTestSample";
-    var promise = $.getJSON(url);
-    promise.then(function (data) {
-        data.forEach(function (e, i) {
-            $('#testSelect').append('<option value="' + e.name + '">' + e.name + '</option>');
-        });
-    });
-}
 function TestData() {
     $.ajax({
         url: "/Ajax/GetTestSample",
@@ -291,16 +293,7 @@ function TestData() {
     }); //end of ajax
 }
 
-//production comparison page:
-function CompanyDropdownMenuSupport() {
-    var url = "/Ajax/SupplierData";
-    var promise = $.getJSON(url);
-    promise.then(function (data) {
-        data.forEach(function (e, i) {
-            $('#companySelect').append('<option value="' + e.name + '">' + e.name + '</option>');
-        });
-    });
-}
+//comparison chart
 function comparisoncharts() {
     $.ajax({
         url: "/Ajax/SupplierData",

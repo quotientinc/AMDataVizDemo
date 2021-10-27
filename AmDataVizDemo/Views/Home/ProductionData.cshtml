@@ -29,22 +29,59 @@
 
     <p>Provide a data table of production data here- see the production datatable at the bottom of the dashboard page.</p>
         -->
-    <!-- Production Data table  -->
+    <!-- Production Data summary  -->
     <div class="box">
-        <table id="ProductionDataTable" class="table table-striped dataTable no-footer dtr-inline">
-            <tr>
-                <th>Job ID</th>
-                <th>Job Name</th>
-                <th>Supplier Name</th>
-                <th>Material</th>
-                <th>Process</th>
-                <th>Kpi Name</th>
-                <th>Kpi Value</th>
-                <th>Report Date</th>
-            </tr>
-        </table>
+        <div class="row">
+            <div class="col-sm-4 infocol">
+                <div class="infobox">
+                    <i class="fas fa-clipboard"></i>
+                </div>
+                <div class="infobox">
+                    <p class="infoP">Total jobs</p>
+                    <h3>2,850</h3>
+                </div>
+            </div>
+            <div class="col-sm-4 infocol">
+                <div class="infobox">
+                    <i class="fas fa-chart-pie">
+                    </i>
+                </div>
+                <div class="infobox">
+                    <p class="infoP">Total parts</p>
+                    <h3>4,500</h3>
+                </div>
+            </div>
+            <div class="col-sm-4 infocol">
+                <div class="infobox">
+                    <i class="fas fa-truck">
+                    </i>
+                </div>
+                <div class="infobox">
+                    <p class="infoP">Total Suppliers</p>
+                    <h3>484</h3>
+                </div>
+            </div>
+        </div>
     </div>
 
+        <!-- Production Data table  -->
+    <div class="box">
+        <div class="table-responsive">
+            <table id="ProductionDataTable" class="table table-striped dataTable no-footer dtr-inline">
+                <tr>
+                    <th>Job ID</th>
+                    <th>Job Name</th>
+                    <th>Supplier Name</th>
+                    <th>Material</th>
+                    <th>Process</th>
+                    <th>Kpi Name</th>
+                    <th>Kpi Value</th>
+                    <th>Report Date</th>
+                </tr>
+            </table>
+            </div>
+        </div>
 
-</div>
-<!-- End Contentbar -->
+
+    </div>
+    <!-- End Contentbar -->
