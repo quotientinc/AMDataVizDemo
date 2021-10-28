@@ -6,7 +6,7 @@ jQuery(document).ready(function ($) {
         generateForecast();
     }
     //production charts page:
-    if (undefined != typeof ($('#barchart')) && $('#barchart').length) {
+    if (undefined != typeof ($('#columnchart')) && $('#columnchart').length) {
         loadSupplierJson();
         $('.tablinks').on('click', function (evt) {
             showChart($(this).attr('data-content'));
@@ -242,9 +242,35 @@ function loadSupplierJson() {
         async: false,
         dataType: "json",
         success: function (data) {
-            generateChart("barchart", "bar", data);
             generateChart("linechart", "line", data);
-            generateChart("column", "column", data); //boxplot needs different x/y values
+            generateChart("columnchart", "column", data);
+            DropdownMenuSupport("/Ajax/SupplierData", '#CompLineSelect');
+            companyProductionLine();
+        }
+    });
+}
+function companyProductionLine(){
+    $.ajax({
+        url: "/Ajax/SupplierData",
+        type: 'GET',
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            $("#CompLineSelect").change(function () {
+                var comp = $('#CompLineSelect').val();
+                console.log(comp);
+                data.forEach(function (e, i) {
+                    if (String(comp) == String(e.name)) {
+                        var series = [
+                            {
+                                name: String(comp),
+                                data: e.data
+                            }];
+                        generateChart("companyLine", "line", series);
+                    }
+                }) //end of data.foreach
+            })
+            
         }
     });
 }

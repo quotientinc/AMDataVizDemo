@@ -35,39 +35,39 @@
 
     <!-- Tab links -->
     <div class="tab">
-        <button class="tablinks" data-content="bar-chart-tabcontent">Bar Graph</button>
-        <button class="tablinks" data-content="col-plot-tabcontent">Column Plot</button>
-        <button class="tablinks" data-content="line-chart-tabcontent">Line Graph</button>
+        <button class="tablinks" data-content="line-chart-tabcontent">Line Chart</button>
+        <button class="tablinks" data-content="bar-plot-tabcontent">Bar Chart</button>
+        <button class="tablinks" data-content="single-line-chart-tabcontent">Singular Company View</button>
     </div>
 
     <!-- Tab content -->
-    <div id="bar-chart-tabcontent" class="tabcontent hidden">
-        <div class="box">
-            <h3>Bar Chart</h3>
-            <div class="container-fluid">
-                <div id="barchart" class="chart"></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="col-plot-tabcontent" class="tabcontent hidden">
-        <div class="box">
-            <h3>Column Plot</h3>
-            <div class="container-fluid">
-                <div id="column" class="chart"></div>
-            </div>
-        </div>
-    </div>
-
     <div id="line-chart-tabcontent" class="tabcontent hidden">
         <div class="box">
             <h3>Line Chart</h3>
-            <select id="CompSelect" name="CompList">
-                <option value="none" selected disabled hidden> Select a Test </option>
+            <div class="container-fluid">
+                <div id="linechart" class="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bar-plot-tabcontent" class="tabcontent hidden">
+        <div class="box">
+            <h3>Bar Chart</h3>
+            <div class="container-fluid">
+                <div id="columnchart" class="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="single-line-chart-tabcontent" class="tabcontent hidden">
+        <div class="box">
+            <h3>Line Chart for Single Company</h3>
+            <select id="CompLineSelect" name="CompList">
+                <option value="none" selected disabled hidden> Select a Company </option>
             </select>
 
             <div class="container-fluid">
-                <div id="linechart" class="chart"></div>
+                <div id="companyLine" class="chart"></div>
             </div>
         </div>
     </div>
